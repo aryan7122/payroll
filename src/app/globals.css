@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -6,7 +7,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: Inter, "Source Sans Pro", Helvetica, Arial, sans-serif;
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -125,51 +126,62 @@
 
   body {
     @apply bg-background text-foreground;
-  }
-}
+    font-family: Inter, "Source Sans Pro", Helvetica, Arial, sans-serif;
 
-@layer utilities {
-  .glass-adaptive {
-    @apply backdrop-blur-md bg-card/40 border border-border/50 shadow-xl dark:bg-black/40 dark:border-white/10;
-  }
+    @layer utilities {
+      .glass-adaptive {
+        @apply backdrop-blur-md bg-card/40 border border-border/50 shadow-xl dark:bg-black/40 dark:border-white/10;
+      }
 
-  .glass-dark {
-    @apply backdrop-blur-md bg-black/40 border border-white/10 shadow-xl;
-  }
+      @layer utilities {
+        .glass {
+          @apply backdrop-blur-md bg-white/40 border border-white/20 shadow-lg;
+        }
 
-  .glass-card {
-    @apply backdrop-blur-lg bg-card/60 border border-border/50 shadow-2xl dark:bg-zinc-900/40 dark:border-white/5;
-  }
+        .glass-dark {
+          @apply backdrop-blur-md bg-black/40 border border-white/10 shadow-xl;
+        }
 
-  /* Custom Scrollbar for OS Feel */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
+        .glass-card {
+          @apply backdrop-blur-lg bg-card/60 border border-border/50 shadow-2xl dark:bg-zinc-900/40 dark:border-white/5;
+        }
 
-  ::-webkit-scrollbar-track {
-    @apply bg-transparent;
-  }
+        .glass-card {
+          @apply backdrop-blur-lg bg-zinc-900/40 border border-white/5 shadow-2xl;
+        }
 
-  ::-webkit-scrollbar-thumb {
-    @apply bg-muted-foreground/20 rounded-full transition-colors hover:bg-muted-foreground/40;
-  }
+        /* Custom Scrollbar for OS Feel */
+        ::-webkit-scrollbar {
+          width: 6px;
+          height: 6px;
+        }
 
-  /* Global Pointer Fix for Interactive Elements */
-  button,
-  [role="button"],
-  .cursor-pointer,
-  a {
-    cursor: pointer !important;
-  }
+        ::-webkit-scrollbar-track {
+          @apply bg-transparent;
+        }
 
-  /* Utility to hide scrollbar */
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
+        ::-webkit-scrollbar-thumb {
+          @apply bg-muted-foreground/20 rounded-full transition-colors hover:bg-muted-foreground/40;
+        }
 
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+        /* Global Pointer Fix for Interactive Elements */
+        button,
+        [role="button"],
+        .cursor-pointer,
+        a {
+          cursor: pointer !important;
+        }
+
+        /* Utility to hide scrollbar */
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      }
+    }
   }
 }
