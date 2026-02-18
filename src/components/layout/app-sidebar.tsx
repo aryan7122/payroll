@@ -23,7 +23,14 @@ import {
     Briefcase,
     FileBadge,
     ShieldCheck,
-    Wallet
+    Wallet,
+    ReceiptText,
+    Package,
+    ShoppingCart,
+    Landmark,
+    BarChart3,
+    Truck,
+    CreditCard
 } from "lucide-react"
 
 import {
@@ -64,56 +71,62 @@ const data = {
         avatar: "/avatars/cs-logo.png", // Placeholder
     },
     company: {
-        name: "Payroll",
-        logo: Wallet,
-        plan: "Pay Service",
+        name: "Accounting system",
+        logo: Landmark,
+        plan: "Enterprise",
     },
     navMain: [
         {
-            title: "Home",
+            title: "Dashboard",
             url: "/dashboard",
             icon: LayoutDashboard,
             isActive: true,
-            items: [], // Single item, no children for Home usually, but keeping structure flexible
         },
         {
-            title: "Employee",
-            url: "/employees",
-            icon: Users,
+            title: "Items",
+            url: "/items",
+            icon: Package,
             items: [
-                { title: "Item", url: "/items" },
-                { title: "Onboarding", url: "/employees/onboarding" },
+                { title: "All Items", url: "/items" },
+                { title: "New Item", url: "/items/new" },
             ],
         },
         {
-            title: "Payslips",
-            url: "/payslips",
-            icon: FileText,
+            title: "Sales",
+            url: "/sales",
+            icon: ReceiptText,
             items: [
-                { title: "Generate", url: "/payslips/generate" },
-                { title: "History", url: "/payslips/history" },
+                { title: "Invoices", url: "/sales/invoices" },
+                { title: "Customers", url: "/sales/customers" },
             ],
         },
         {
-            title: "Approvals",
-            url: "/approvals",
-            icon: ShieldCheck,
+            title: "Purchases",
+            url: "/purchases",
+            icon: ShoppingCart,
             items: [
-                { title: "Leave Requests", url: "/approvals/leaves" },
-                { title: "Reimbursements", url: "/approvals/claims" },
+                { title: "Bills", url: "/purchases/bills" },
+                { title: "Vendors", url: "/purchases/vendors" },
+                { title: "Expenses", url: "/purchases/expenses" },
             ],
         },
         {
-            title: "Form 16",
-            url: "/compliance/form16",
-            icon: FileBadge,
-            items: [],
+            title: "Banking",
+            url: "/banking",
+            icon: CreditCard,
+            items: [
+                { title: "Transactions", url: "/banking/transactions" },
+                { title: "Bank Accounts", url: "/banking/accounts" },
+            ],
         },
         {
-            title: "Pay Runs",
-            url: "/payroll/run",
-            icon: IndianRupee,
-            items: [],
+            title: "Reports",
+            url: "/reports",
+            icon: BarChart3,
+            items: [
+                { title: "Profit & Loss", url: "/reports/profit-loss" },
+                { title: "Balance Sheet", url: "/reports/balance-sheet" },
+            ],
         },
     ],
     navSecondary: [
