@@ -53,9 +53,9 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${roboto.variable} ${outfit.variable} ${montserrat.variable} ${poppins.variable}`} suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${roboto.variable} ${outfit.variable} ${montserrat.variable} ${poppins.variable} antialiased`}
+        className="antialiased"
         style={{ fontFamily: 'var(--font-primary)' } as any}
       >
         <ThemeProvider
