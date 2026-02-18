@@ -21,7 +21,7 @@ export function RefreshButton({
     onRefresh,
     ...props
 }: RefreshButtonProps) {
-    const queryClient = useQueryClient()
+    const queryClient = useQueryClient() // 
 
     // Track if any query matching the key is currently fetching
     // This makes the loading state dynamic and synchronized with background fetches too
