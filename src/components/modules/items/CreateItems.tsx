@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -137,9 +137,55 @@ export function CreateItems() {
         // Submit logic here
     }
 
+    // --- Navigation & Scroll Logic ---
+    const [activeSection, setActiveSection] = useState("basic")
+
+    const sections = [
+        { id: "basic", title: "Basic Information", icon: ShoppingBag },
+        { id: "sales", title: "Sales Information", icon: Coins },
+        ...(itemType === "Product" ? [
+            { id: "purchase", title: "Purchase Information", icon: Truck },
+            { id: "inventory", title: "Inventory Tracking", icon: Warehouse }
+        ] : [])
+    ]
+
+    function scrollToSection(id: string) {
+        const element = document.getElementById(id)
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth", block: "start" })
+            setActiveSection(id)
+        }
+    }
+
+    // --- Scroll Spy Logic ---
+    useEffect(() => {
+        const observerOptions = {
+            root: null,
+            rootMargin: "-20% 0px -70% 0px", // Trigger when section is near the top
+            threshold: 0
+        }
+
+        const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setActiveSection(entry.target.id)
+                }
+            })
+        }
+
+        const observer = new IntersectionObserver(handleIntersect, observerOptions)
+
+        sections.forEach((section) => {
+            const element = document.getElementById(section.id)
+            if (element) observer.observe(element)
+        })
+
+        return () => observer.disconnect()
+    }, [sections]) // Re-run if sections change (e.g. itemType change)
+
     return (
         <ScrollArea className="h-full bg-background/50">
-            <div className="flex-1 p-8 pt-6 max-w-5xl mx-auto">
+            <div className="flex-1 p-8 pt-6 max-w-7xl mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -192,167 +238,140 @@ export function CreateItems() {
                                 animate="visible"
                                 exit="hidden"
                                 variants={containerVariants}
-                                className="space-y-8"
+                                className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-10 items-start"
                             >
-                                {/* 2. Basic Information */}
-                                <SectionWrapper title="Basic Information" icon={ShoppingBag}>
-                                    <div className="grid gap-6 md:grid-cols-2">
-                                        <CustomInput
-                                            control={form.control}
-                                            name="name"
-                                            label="Item Name"
-                                            placeholder="e.g. Wireless Mouse"
-                                            icon={Tag}
-                                            required
-                                        />
-                                        <CustomInput
-                                            control={form.control}
-                                            name="code"
-                                            label="Item Code"
-                                            placeholder="Auto-generated"
-                                            icon={Hash}
-                                            required
-                                        />
-
-                                        {itemType === "Product" && (
-                                            <>
-                                                <CustomInput
-                                                    control={form.control}
-                                                    name="sku"
-                                                    label="SKU"
-                                                    placeholder="Stock Keeping Unit"
-                                                    icon={Barcode}
-                                                    required
-                                                />
-                                                <div className="space-y-2">
-                                                    <FormLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Unit (UOM) *</FormLabel>
-                                                    <FormField
-                                                        control={form.control}
-                                                        name="unit"
-                                                        render={({ field }) => (
-                                                            <FormItem>
-                                                                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                                                    <FormControl>
-                                                                        <SelectTrigger className="h-11 bg-background/50 border-input/50 focus:border-primary focus:ring-primary/20 transition-all">
-                                                                            <div className="flex items-center gap-2">
-                                                                                <Layers className="size-4 text-muted-foreground" />
-                                                                                <SelectValue placeholder="Select Unit" />
-                                                                            </div>
-                                                                        </SelectTrigger>
-                                                                    </FormControl>
-                                                                    <SelectContent>
-                                                                        <SelectItem value="pcs">Pieces (pcs)</SelectItem>
-                                                                        <SelectItem value="kg">Kilograms (kg)</SelectItem>
-                                                                        <SelectItem value="box">Box</SelectItem>
-                                                                    </SelectContent>
-                                                                </Select>
-                                                                <FormMessage />
-                                                            </FormItem>
-                                                        )}
-                                                    />
-                                                </div>
-                                            </>
-                                        )}
-
-                                        <CustomInput
-                                            control={form.control}
-                                            name={itemType === "Product" ? "hsnCode" : "sacCode"}
-                                            label={itemType === "Product" ? "HSN Code" : "SAC Code"}
-                                            placeholder="Tax Classification Code"
-                                            icon={FileText}
-                                            required={itemType === "Product"}
-                                        />
-
-                                        <CustomInput
-                                            control={form.control}
-                                            name="category"
-                                            label="Category"
-                                            placeholder="Select Category"
-                                            icon={Layers}
-                                        />
-                                    </div>
-                                </SectionWrapper>
-
-                                {/* 3. Sales Information */}
-                                <SectionWrapper title="Sales Information" icon={Coins}>
-                                    <div className="space-y-6">
-                                        <FormField
-                                            control={form.control}
-                                            name="isSale"
-                                            render={({ field }) => (
-                                                <FormItem className="flex flex-row items-center justify-between rounded-lg border border-border/50 bg-background/40 p-4 shadow-sm backdrop-blur-sm">
-                                                    <div className="space-y-0.5">
-                                                        <FormLabel className="text-base font-medium">Available for Sale</FormLabel>
-                                                        <FormDescription>Enable if this item is sold directly to customers.</FormDescription>
+                                {/* Left Navigation Sidebar */}
+                                <div className="hidden lg:block sticky top-6 space-y-8">
+                                    <div className="relative">
+                                        <div className="absolute left-3.5 top-0 bottom-0 w-[2px] bg-border/50 rounded-full" />
+                                        <div className="space-y-6">
+                                            {sections.map((section, idx) => {
+                                                const isActive = activeSection === section.id
+                                                const Icon = section.icon
+                                                return (
+                                                    <div key={section.id} className="relative group">
+                                                        <div
+                                                            onClick={() => scrollToSection(section.id)}
+                                                            className={cn(
+                                                                "flex items-center gap-4 cursor-pointer relative z-10 transition-all duration-300",
+                                                                isActive ? "translate-x-1" : "hover:translate-x-1"
+                                                            )}
+                                                        >
+                                                            <div className={cn(
+                                                                "size-7 rounded-full flex items-center justify-center border-2 transition-all duration-300 bg-background",
+                                                                isActive
+                                                                    ? "border-primary text-primary shadow-[0_0_10px_rgba(var(--primary-rgb),0.3)] scale-110"
+                                                                    : "border-muted-foreground/30 text-muted-foreground group-hover:border-primary/50 group-hover:text-primary/70"
+                                                            )}>
+                                                                <Icon className="size-3.5" />
+                                                            </div>
+                                                            <span className={cn(
+                                                                "text-sm font-medium transition-colors duration-300",
+                                                                isActive ? "text-primary font-bold" : "text-muted-foreground group-hover:text-foreground"
+                                                            )}>
+                                                                {section.title}
+                                                            </span>
+                                                        </div>
+                                                        {loadingLine(isActive)}
                                                     </div>
-                                                    <FormControl>
-                                                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                                                    </FormControl>
-                                                </FormItem>
-                                            )}
-                                        />
+                                                )
+                                            })}
+                                        </div>
+                                    </div>
+                                </div>
 
-                                        {/* Animated Reveal for Sales Fields */}
-                                        <AnimatePresence>
-                                            {form.watch("isSale") && (
-                                                <motion.div
-                                                    initial={{ opacity: 0, height: 0 }}
-                                                    animate={{ opacity: 1, height: "auto" }}
-                                                    exit={{ opacity: 0, height: 0 }}
-                                                    className="grid gap-6 md:grid-cols-2 overflow-hidden pt-2"
-                                                >
+                                {/* Right Form Content */}
+                                <div className="space-y-8 min-w-0">
+                                    {/* 2. Basic Information */}
+                                    <SectionWrapper id="basic" title="Basic Information" icon={ShoppingBag}>
+                                        <div className="grid gap-6 md:grid-cols-2">
+                                            <CustomInput
+                                                control={form.control}
+                                                name="name"
+                                                label="Item Name"
+                                                placeholder="e.g. Wireless Mouse"
+                                                icon={Tag}
+                                                required
+                                            />
+                                            <CustomInput
+                                                control={form.control}
+                                                name="code"
+                                                label="Item Code"
+                                                placeholder="Auto-generated"
+                                                icon={Hash}
+                                                required
+                                            />
+
+                                            {itemType === "Product" && (
+                                                <>
                                                     <CustomInput
                                                         control={form.control}
-                                                        name="salesPrice"
-                                                        label="Sales Price"
-                                                        type="number"
-                                                        icon={DollarSign}
+                                                        name="sku"
+                                                        label="SKU"
+                                                        placeholder="Stock Keeping Unit"
+                                                        icon={Barcode}
                                                         required
                                                     />
-                                                    <CustomInput
-                                                        control={form.control}
-                                                        name="salesAccount"
-                                                        label="Sales Account"
-                                                        placeholder="General Sales"
-                                                        icon={Receipt}
-                                                    />
-                                                    <div className="col-span-2">
-                                                        <FormLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Description</FormLabel>
+                                                    <div className="space-y-2">
+                                                        <FormLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Unit (UOM) *</FormLabel>
                                                         <FormField
                                                             control={form.control}
-                                                            name="salesDescription"
+                                                            name="unit"
                                                             render={({ field }) => (
                                                                 <FormItem>
-                                                                    <FormControl>
-                                                                        <Textarea
-                                                                            placeholder="Description for sales orders..."
-                                                                            className="resize-none bg-background/50 border-input/50 focus:border-primary focus:ring-primary/20 transition-all min-h-[100px]"
-                                                                            {...field}
-                                                                        />
-                                                                    </FormControl>
+                                                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                                        <FormControl>
+                                                                            <SelectTrigger className="h-11 bg-background/50 border-input/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all shadow-sm focus:shadow-primary/10">
+                                                                                <div className="flex items-center gap-2">
+                                                                                    <Layers className="size-4 text-muted-foreground" />
+                                                                                    <SelectValue placeholder="Select Unit" />
+                                                                                </div>
+                                                                            </SelectTrigger>
+                                                                        </FormControl>
+                                                                        <SelectContent>
+                                                                            <SelectItem value="pcs">Pieces (pcs)</SelectItem>
+                                                                            <SelectItem value="kg">Kilograms (kg)</SelectItem>
+                                                                            <SelectItem value="box">Box</SelectItem>
+                                                                        </SelectContent>
+                                                                    </Select>
                                                                     <FormMessage />
                                                                 </FormItem>
                                                             )}
                                                         />
                                                     </div>
-                                                </motion.div>
+                                                </>
                                             )}
-                                        </AnimatePresence>
-                                    </div>
-                                </SectionWrapper>
 
-                                {/* 4. Purchase Information (Product Only) */}
-                                {itemType === "Product" && (
-                                    <SectionWrapper title="Purchase Information" icon={Truck}>
-                                        <div className="space-y-6">
+                                            <CustomInput
+                                                control={form.control}
+                                                name={itemType === "Product" ? "hsnCode" : "sacCode"}
+                                                label={itemType === "Product" ? "HSN Code" : "SAC Code"}
+                                                placeholder="Tax Classification Code"
+                                                icon={FileText}
+                                                required={itemType === "Product"}
+                                            />
+
+                                            <CustomInput
+                                                control={form.control}
+                                                name="category"
+                                                label="Category"
+                                                placeholder="Select Category"
+                                                icon={Layers}
+                                            />
+                                        </div>
+                                    </SectionWrapper>
+
+                                    {/* 3. Sales Information */}
+                                    <SectionWrapper id="sales" title="Sales Information" icon={Coins}>
+                                        <div className="space-y-6 gap-6">
                                             <FormField
                                                 control={form.control}
-                                                name="isPurchase"
+                                                name="isSale"
                                                 render={({ field }) => (
                                                     <FormItem className="flex flex-row items-center justify-between rounded-lg border border-border/50 bg-background/40 p-4 shadow-sm backdrop-blur-sm">
                                                         <div className="space-y-0.5">
-                                                            <FormLabel className="text-base font-medium">Available for Purchase</FormLabel>
-                                                            <FormDescription>Enable if this item is procured from vendors.</FormDescription>
+                                                            <FormLabel className="text-base font-medium">Available for Sale</FormLabel>
+                                                            <FormDescription>Enable if this item is sold directly to customers.</FormDescription>
                                                         </div>
                                                         <FormControl>
                                                             <Checkbox checked={field.value} onCheckedChange={field.onChange} />
@@ -361,8 +380,9 @@ export function CreateItems() {
                                                 )}
                                             />
 
+                                            {/* Animated Reveal for Sales Fields */}
                                             <AnimatePresence>
-                                                {form.watch("isPurchase") && (
+                                                {form.watch("isSale") && (
                                                     <motion.div
                                                         initial={{ opacity: 0, height: 0 }}
                                                         animate={{ opacity: 1, height: "auto" }}
@@ -371,36 +391,30 @@ export function CreateItems() {
                                                     >
                                                         <CustomInput
                                                             control={form.control}
-                                                            name="purchasePrice"
-                                                            label="Purchase Price"
+                                                            name="salesPrice"
+                                                            label="Sales Price"
                                                             type="number"
                                                             icon={DollarSign}
+                                                            required
                                                         />
                                                         <CustomInput
                                                             control={form.control}
-                                                            name="purchaseAccount"
-                                                            label="Purchase Account"
-                                                            placeholder="Cost of Goods Sold"
+                                                            name="salesAccount"
+                                                            label="Sales Account"
+                                                            placeholder="General Sales"
                                                             icon={Receipt}
-                                                        />
-                                                        <CustomInput
-                                                            control={form.control}
-                                                            name="vendor"
-                                                            label="Preferred Vendor"
-                                                            placeholder="Select Vendor"
-                                                            icon={User}
                                                         />
                                                         <div className="col-span-2">
                                                             <FormLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Description</FormLabel>
                                                             <FormField
                                                                 control={form.control}
-                                                                name="purchaseDescription"
+                                                                name="salesDescription"
                                                                 render={({ field }) => (
                                                                     <FormItem>
                                                                         <FormControl>
                                                                             <Textarea
-                                                                                placeholder="Description for purchase orders..."
-                                                                                className="resize-none bg-background/50 border-input/50 focus:border-primary focus:ring-primary/20 transition-all min-h-[100px]"
+                                                                                placeholder="Description for sales orders..."
+                                                                                className="resize-none bg-background/50 border-input/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all min-h-[100px] shadow-sm focus:shadow-primary/10"
                                                                                 {...field}
                                                                             />
                                                                         </FormControl>
@@ -414,30 +428,104 @@ export function CreateItems() {
                                             </AnimatePresence>
                                         </div>
                                     </SectionWrapper>
-                                )}
 
-                                {/* 5. Inventory (Product Only) */}
-                                {itemType === "Product" && (
-                                    <SectionWrapper title="Inventory Tracking" icon={Warehouse}>
-                                        <div className="grid gap-6 md:grid-cols-2">
-                                            <CustomInput
-                                                control={form.control}
-                                                name="openingStock"
-                                                label="Opening Stock"
-                                                type="number"
-                                                icon={Box}
-                                            />
-                                            <CustomInput
-                                                control={form.control}
-                                                name="warehouse"
-                                                label="Default Warehouse"
-                                                placeholder="Main Warehouse"
-                                                icon={Warehouse}
-                                            />
-                                        </div>
-                                    </SectionWrapper>
-                                )}
+                                    {/* 4. Purchase Information (Product Only) */}
+                                    {itemType === "Product" && (
+                                        <SectionWrapper id="purchase" title="Purchase Information" icon={Truck}>
+                                            <div className="space-y-6">
+                                                <FormField
+                                                    control={form.control}
+                                                    name="isPurchase"
+                                                    render={({ field }) => (
+                                                        <FormItem className="flex  flex-row items-center justify-between rounded-lg border border-border/50 bg-background/40 p-4 shadow-sm backdrop-blur-sm">
+                                                            <div className="space-y-0.5">
+                                                                <FormLabel className="text-base font-medium">Available for Purchase</FormLabel>
+                                                                <FormDescription>Enable if this item is procured from vendors.</FormDescription>
+                                                            </div>
+                                                            <FormControl>
+                                                                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                                                            </FormControl>
+                                                        </FormItem>
+                                                    )}
+                                                />
 
+                                                <AnimatePresence>
+                                                    {form.watch("isPurchase") && (
+                                                        <motion.div
+                                                            initial={{ opacity: 0, height: 0 }}
+                                                            animate={{ opacity: 1, height: "auto" }}
+                                                            exit={{ opacity: 0, height: 0 }}
+                                                            className="grid gap-6 md:grid-cols-2 overflow-hidden pt-2"
+                                                        >
+                                                            <CustomInput
+                                                                control={form.control}
+                                                                name="purchasePrice"
+                                                                label="Purchase Price"
+                                                                type="number"
+                                                                icon={DollarSign}
+                                                            />
+                                                            <CustomInput
+                                                                control={form.control}
+                                                                name="purchaseAccount"
+                                                                label="Purchase Account"
+                                                                placeholder="Cost of Goods Sold"
+                                                                icon={Receipt}
+                                                            />
+                                                            <CustomInput
+                                                                control={form.control}
+                                                                name="vendor"
+                                                                label="Preferred Vendor"
+                                                                placeholder="Select Vendor"
+                                                                icon={User}
+                                                            />
+                                                            <div className="col-span-2">
+                                                                <FormLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Description</FormLabel>
+                                                                <FormField
+                                                                    control={form.control}
+                                                                    name="purchaseDescription"
+                                                                    render={({ field }) => (
+                                                                        <FormItem>
+                                                                            <FormControl>
+                                                                                <Textarea
+                                                                                    placeholder="Description for purchase orders..."
+                                                                                    className="resize-none bg-background/50 border-input/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all min-h-[100px] shadow-sm focus:shadow-primary/10"
+                                                                                    {...field}
+                                                                                />
+                                                                            </FormControl>
+                                                                            <FormMessage />
+                                                                        </FormItem>
+                                                                    )}
+                                                                />
+                                                            </div>
+                                                        </motion.div>
+                                                    )}
+                                                </AnimatePresence>
+                                            </div>
+                                        </SectionWrapper>
+                                    )}
+
+                                    {/* 5. Inventory (Product Only) */}
+                                    {itemType === "Product" && (
+                                        <SectionWrapper id="inventory" title="Inventory Tracking" icon={Warehouse}>
+                                            <div className="grid gap-6 md:grid-cols-2">
+                                                <CustomInput
+                                                    control={form.control}
+                                                    name="openingStock"
+                                                    label="Opening Stock"
+                                                    type="number"
+                                                    icon={Box}
+                                                />
+                                                <CustomInput
+                                                    control={form.control}
+                                                    name="warehouse"
+                                                    label="Default Warehouse"
+                                                    placeholder="Main Warehouse"
+                                                    icon={Warehouse}
+                                                />
+                                            </div>
+                                        </SectionWrapper>
+                                    )}
+                                </div>
                             </motion.div>
                         </AnimatePresence>
 
@@ -445,7 +533,7 @@ export function CreateItems() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.5 }}
-                            className="flex justify-end gap-4 sticky bottom-6 z-10"
+                            className="flex justify-end gap-4 sticky bottom-6 z-10 pt-4"
                         >
                             <div className="glass-adaptive rounded-full p-2 flex gap-4 shadow-2xl">
                                 <Button variant="ghost" type="button" className="rounded-full px-6 hover:bg-destructive/10 hover:text-destructive">Cancel</Button>
@@ -507,11 +595,12 @@ function TypeSelectionCard({ active, onClick, icon: Icon, title, description, co
     )
 }
 
-function SectionWrapper({ title, icon: Icon, children }: { title: string, icon: any, children: React.ReactNode }) {
+function SectionWrapper({ id, title, icon: Icon, children }: { id?: string, title: string, icon: any, children: React.ReactNode }) {
     return (
         <motion.div
+            id={id}
             variants={itemVariants}
-            className="group relative rounded-2xl border border-border/50 bg-background/40 backdrop-blur-xl shadow-sm hover:shadow-md transition-all duration-500 overflow-hidden"
+            className="group relative rounded-2xl border border-border/50 bg-background/40 backdrop-blur-xl shadow-sm hover:shadow-md transition-all duration-500 overflow-hidden scroll-mt-24"
         >
             <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="relative p-6 space-y-6">
@@ -544,13 +633,25 @@ function CustomInput({ control, name, label, placeholder, icon: Icon, required, 
                                 {...field}
                                 type={type}
                                 placeholder={placeholder}
-                                className="pl-10 h-11 bg-background/50 border-input/50 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all rounded-lg"
+                                className="pl-10 h-11 bg-background/50 border-input/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all rounded-lg shadow-sm focus:shadow-primary/10"
                             />
                         </div>
                     </FormControl>
                     <FormMessage />
                 </FormItem>
             )}
+        />
+    )
+}
+
+function loadingLine(isActive: boolean) {
+    return isActive && (
+        <motion.div
+            layoutId="active-line"
+            className="absolute left-[14px] top-0 bottom-0 w-[2px] bg-primary z-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
         />
     )
 }
