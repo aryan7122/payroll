@@ -312,33 +312,34 @@ export function CreateItems() {
                                                         icon={Barcode}
                                                         required
                                                     />
-                                                    <div className="space-y-2">
-                                                        <FormLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Unit (UOM) *</FormLabel>
-                                                        <FormField
-                                                            control={form.control}
-                                                            name="unit"
-                                                            render={({ field }) => (
-                                                                <FormItem>
-                                                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                                                        <FormControl>
-                                                                            <SelectTrigger className="h-11 bg-background/50 border-input/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all">
-                                                                                <div className="flex items-center gap-2">
-                                                                                    <Layers className="size-4 text-muted-foreground" />
-                                                                                    <SelectValue placeholder="Select Unit" />
-                                                                                </div>
-                                                                            </SelectTrigger>
-                                                                        </FormControl>
-                                                                        <SelectContent>
-                                                                            <SelectItem value="pcs">Pieces (pcs)</SelectItem>
-                                                                            <SelectItem value="kg">Kilograms (kg)</SelectItem>
-                                                                            <SelectItem value="box">Box</SelectItem>
-                                                                        </SelectContent>
-                                                                    </Select>
-                                                                    <FormMessage />
-                                                                </FormItem>
-                                                            )}
-                                                        />
-                                                    </div>
+
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="unit"
+                                                        render={({ field }) => (
+                                                            <FormItem className="space-y-2 group">
+                                                                <FormLabel className="text-xs font-semibold text-muted-foreground uppercase tracking-wider pl-1 flex items-center gap-1.5 transition-colors group-focus-within:text-primary">
+                                                                    Unit (UOM) {itemType === "Product" && <span className="text-destructive">*</span>}
+                                                                </FormLabel>
+                                                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                                    <FormControl>
+                                                                        <SelectTrigger className="w-full bg-background/50 border-input/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all rounded-lg">
+                                                                            <div className="flex items-center gap-2">
+                                                                                <Layers className="size-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                                                                                <SelectValue placeholder="Select Unit" />
+                                                                            </div>
+                                                                        </SelectTrigger>
+                                                                    </FormControl>
+                                                                    <SelectContent>
+                                                                        <SelectItem value="pcs">Pieces (pcs)</SelectItem>
+                                                                        <SelectItem value="kg">Kilograms (kg)</SelectItem>
+                                                                        <SelectItem value="box">Box</SelectItem>
+                                                                    </SelectContent>
+                                                                </Select>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
                                                 </>
                                             )}
 
@@ -544,8 +545,8 @@ export function CreateItems() {
                         </motion.div>
                     </form>
                 </Form>
-            </div>
-        </ScrollArea>
+            </div >
+        </ScrollArea >
     )
 }
 
