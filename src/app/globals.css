@@ -127,5 +127,52 @@
   body {
     @apply bg-background text-foreground;
     font-family: Inter, "Source Sans Pro", Helvetica, Arial, sans-serif;
+
+
+    @layer utilities {
+      .glass {
+        @apply backdrop-blur-md bg-white/40 border border-white/20 shadow-lg;
+      }
+
+      .glass-dark {
+        @apply backdrop-blur-md bg-black/40 border border-white/10 shadow-xl;
+      }
+
+      .glass-card {
+        @apply backdrop-blur-lg bg-zinc-900/40 border border-white/5 shadow-2xl;
+      }
+
+      /* Custom Scrollbar for OS Feel */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+
+      ::-webkit-scrollbar-track {
+        @apply bg-transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        @apply bg-muted-foreground/20 rounded-full transition-colors hover:bg-muted-foreground/40;
+      }
+
+      /* Global Pointer Fix for Interactive Elements */
+      button,
+      [role="button"],
+      .cursor-pointer,
+      a {
+        cursor: pointer !important;
+      }
+
+      /* Utility to hide scrollbar */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    }
   }
 }

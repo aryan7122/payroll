@@ -305,8 +305,7 @@ export default function ItemsPage() {
                     <Link href="/items/new">
                         <Button
                             size="sm"
-                            className="h-8 text-white hover:opacity-90 transition-opacity shadow-sm"
-                            style={{ backgroundColor: "lab(44.0605% 29.0279 -86.0352)" }}
+                            className="h-8 text-white hover:opacity-90 transition-opacity shadow-sm bg-[lab(44.0605%_29.0279_-86.0352)] dark:bg-indigo-600"
                         >
                             <Plus className="mr-2 h-4 w-4" />
                             New Item
