@@ -1,4 +1,5 @@
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { CreateItems } from "@/components/modules/items/CreateItems"
 
 export default function Page() {
     return (
@@ -15,9 +16,7 @@ export default function Page() {
                         Compliance Due: 15th Feb
                     </div>
                 </div>
-
             </div>
-       
         </ScrollArea >
     )
 }
