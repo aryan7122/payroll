@@ -161,7 +161,7 @@ export function CreateItems() {
     useEffect(() => {
         const observerOptions = {
             root: null,
-            rootMargin: "-20% 0px -70% 0px", // Trigger when section is near the top
+            rootMargin: "-10% 0px -60% 0px", // Widen the "active" zone for better triggering
             threshold: 0
         }
 
@@ -196,7 +196,7 @@ export function CreateItems() {
                 </motion.div>
 
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 pb-20">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 pb-[40vh]">
 
                         {/* 1. Item Type Selector - Premium Cards */}
                         <motion.div
@@ -238,7 +238,7 @@ export function CreateItems() {
                                 animate="visible"
                                 exit="hidden"
                                 variants={containerVariants}
-                                className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-10 items-start"
+                                className="grid grid-cols-1 lg:grid-cols-[240px_1fr]  items-start"
                             >
                                 {/* Left Navigation Sidebar */}
                                 <div className="hidden lg:block sticky top-6 space-y-8">
@@ -260,7 +260,7 @@ export function CreateItems() {
                                                             <div className={cn(
                                                                 "size-7 rounded-full flex items-center justify-center border-2 transition-all duration-300 bg-background",
                                                                 isActive
-                                                                    ? "border-primary text-primary shadow-[0_0_10px_rgba(var(--primary-rgb),0.3)] scale-110"
+                                                                    ? "border-primary text-primary scale-110"
                                                                     : "border-muted-foreground/30 text-muted-foreground group-hover:border-primary/50 group-hover:text-primary/70"
                                                             )}>
                                                                 <Icon className="size-3.5" />
@@ -321,7 +321,7 @@ export function CreateItems() {
                                                                 <FormItem>
                                                                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                                                                         <FormControl>
-                                                                            <SelectTrigger className="h-11 bg-background/50 border-input/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all shadow-sm focus:shadow-primary/10">
+                                                                            <SelectTrigger className="h-11 bg-background/50 border-input/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all">
                                                                                 <div className="flex items-center gap-2">
                                                                                     <Layers className="size-4 text-muted-foreground" />
                                                                                     <SelectValue placeholder="Select Unit" />
@@ -368,7 +368,7 @@ export function CreateItems() {
                                                 control={form.control}
                                                 name="isSale"
                                                 render={({ field }) => (
-                                                    <FormItem className="flex flex-row items-center justify-between rounded-lg border border-border/50 bg-background/40 p-4 shadow-sm backdrop-blur-sm">
+                                                    <FormItem className="flex flex-row items-center justify-between rounded-lg border border-border/50 bg-background/40 p-4 backdrop-blur-sm">
                                                         <div className="space-y-0.5">
                                                             <FormLabel className="text-base font-medium">Available for Sale</FormLabel>
                                                             <FormDescription>Enable if this item is sold directly to customers.</FormDescription>
@@ -387,7 +387,7 @@ export function CreateItems() {
                                                         initial={{ opacity: 0, height: 0 }}
                                                         animate={{ opacity: 1, height: "auto" }}
                                                         exit={{ opacity: 0, height: 0 }}
-                                                        className="grid gap-6 md:grid-cols-2 overflow-hidden pt-2"
+                                                        className="grid gap-6 md:grid-cols-2 pt-2"
                                                     >
                                                         <CustomInput
                                                             control={form.control}
@@ -414,7 +414,7 @@ export function CreateItems() {
                                                                         <FormControl>
                                                                             <Textarea
                                                                                 placeholder="Description for sales orders..."
-                                                                                className="resize-none bg-background/50 border-input/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all min-h-[100px] shadow-sm focus:shadow-primary/10"
+                                                                                className="resize-none bg-background/50 border-input/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all min-h-[100px]"
                                                                                 {...field}
                                                                             />
                                                                         </FormControl>
@@ -437,7 +437,7 @@ export function CreateItems() {
                                                     control={form.control}
                                                     name="isPurchase"
                                                     render={({ field }) => (
-                                                        <FormItem className="flex  flex-row items-center justify-between rounded-lg border border-border/50 bg-background/40 p-4 shadow-sm backdrop-blur-sm">
+                                                        <FormItem className="flex  flex-row items-center justify-between rounded-lg border border-border/50 bg-background/40 p-4 backdrop-blur-sm">
                                                             <div className="space-y-0.5">
                                                                 <FormLabel className="text-base font-medium">Available for Purchase</FormLabel>
                                                                 <FormDescription>Enable if this item is procured from vendors.</FormDescription>
@@ -455,7 +455,7 @@ export function CreateItems() {
                                                             initial={{ opacity: 0, height: 0 }}
                                                             animate={{ opacity: 1, height: "auto" }}
                                                             exit={{ opacity: 0, height: 0 }}
-                                                            className="grid gap-6 md:grid-cols-2 overflow-hidden pt-2"
+                                                            className="grid gap-6 md:grid-cols-2 pt-2"
                                                         >
                                                             <CustomInput
                                                                 control={form.control}
@@ -488,7 +488,7 @@ export function CreateItems() {
                                                                             <FormControl>
                                                                                 <Textarea
                                                                                     placeholder="Description for purchase orders..."
-                                                                                    className="resize-none bg-background/50 border-input/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all min-h-[100px] shadow-sm focus:shadow-primary/10"
+                                                                                    className="resize-none bg-background/50 border-input/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all min-h-[100px]"
                                                                                     {...field}
                                                                                 />
                                                                             </FormControl>
@@ -537,7 +537,7 @@ export function CreateItems() {
                         >
                             <div className="glass-adaptive rounded-full p-2 flex gap-4 shadow-2xl">
                                 <Button variant="ghost" type="button" className="rounded-full px-6 hover:bg-destructive/10 hover:text-destructive">Cancel</Button>
-                                <Button type="submit" className="rounded-full px-8 bg-primary shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all">
+                                <Button type="submit" className="rounded-full px-8 bg-primary hover:bg-primary/90 transition-all">
                                     Save {itemType}
                                 </Button>
                             </div>
@@ -563,7 +563,7 @@ function TypeSelectionCard({ active, onClick, icon: Icon, title, description, co
             className={cn(
                 "cursor-pointer relative overflow-hidden rounded-xl border-2 p-6 transition-all duration-300",
                 active
-                    ? `bg-primary/5 border-primary shadow-lg shadow-primary/25`
+                    ? `bg-primary/5 border-primary`
                     : "bg-background/40 border-border/50 hover:border-primary/30 hover:bg-accent/20"
             )}
         >
@@ -600,9 +600,9 @@ function SectionWrapper({ id, title, icon: Icon, children }: { id?: string, titl
         <motion.div
             id={id}
             variants={itemVariants}
-            className="group relative rounded-2xl border border-border/50 bg-background/40 backdrop-blur-xl shadow-sm hover:shadow-md transition-all duration-500 overflow-hidden scroll-mt-24"
+            className="group relative rounded-2xl border border-border/50 bg-background/40 backdrop-blur-xl transition-all duration-500 scroll-mt-24"
         >
-            <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="relative p-6 space-y-6">
                 <div className="flex items-center gap-3 pb-4 border-b border-border/30">
                     <div className="p-2 rounded-lg bg-primary/10 text-primary">
@@ -633,7 +633,7 @@ function CustomInput({ control, name, label, placeholder, icon: Icon, required, 
                                 {...field}
                                 type={type}
                                 placeholder={placeholder}
-                                className="pl-10 h-11 bg-background/50 border-input/50 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all rounded-lg shadow-sm focus:shadow-primary/10"
+                                className="pl-10 h-11 bg-background/50 border-input/50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all rounded-lg"
                             />
                         </div>
                     </FormControl>
