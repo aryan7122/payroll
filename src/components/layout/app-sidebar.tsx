@@ -81,7 +81,7 @@ const data = {
             url: "/employees",
             icon: Users,
             items: [
-                { title: "All Employees", url: "/employees" },
+                { title: "Item", url: "/items" },
                 { title: "Onboarding", url: "/employees/onboarding" },
             ],
         },
