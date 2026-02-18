@@ -33,7 +33,7 @@ export const columns: ColumnDef<Item>[] = [
                 }
                 onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
                 aria-label="Select all"
-                className="border-muted-foreground/40 data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600"
+                className="border-muted-foreground/40 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
             />
         ),
         cell: ({ row }) => (
@@ -41,7 +41,7 @@ export const columns: ColumnDef<Item>[] = [
                 checked={row.getIsSelected()}
                 onCheckedChange={(value) => row.toggleSelected(!!value)}
                 aria-label="Select row"
-                className="border-muted-foreground/40 data-[state=checked]:bg-indigo-600 data-[state=checked]:border-indigo-600"
+                className="border-muted-foreground/40 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
             />
         ),
         enableSorting: false,
@@ -62,7 +62,7 @@ export const columns: ColumnDef<Item>[] = [
                 </Button>
             )
         },
-        cell: ({ row }) => <div className="font-medium text-sm text-blue-600 hover:underline cursor-pointer">{row.getValue("name")}</div>,
+        cell: ({ row }) => <div className="font-medium text-sm text-primary hover:underline cursor-pointer decoration-primary/50 underline-offset-4">{row.getValue("name")}</div>,
     },
     {
         accessorKey: "category", // Virtual accessor for combined display

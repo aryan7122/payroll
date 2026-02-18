@@ -79,10 +79,10 @@ export function DataTable<TData, TValue>({
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id} className="sticky top-0 bg-gray-50 hover:bg-gray-50 dark:bg-muted/50 dark:hover:bg-muted/50 z-10 border-b-0">
+                            <TableRow key={headerGroup.id} className="sticky top-0 bg-muted/50 hover:bg-muted/50 dark:bg-muted/50 dark:hover:bg-muted/50 z-10 border-b-0">
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead key={header.id} className="first:pl-8 last:pr-8 h-12 text-xs uppercase tracking-wider text-muted-foreground font-semibold bg-gray-50/50 dark:bg-muted/50">
+                                        <TableHead key={header.id} className="first:pl-8 last:pr-8 h-12 text-xs uppercase tracking-wider text-muted-foreground font-semibold bg-muted/50 dark:bg-muted/50">
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(

@@ -235,9 +235,9 @@ export default function ItemsPage() {
                                 <div className="space-y-1">
                                     <Button variant="ghost" size="sm" className="w-full justify-start h-8 px-2 font-normal">Normal</Button>
                                     <Button variant="ghost" size="sm" className="w-full justify-start h-8 px-2 font-normal">Name</Button>
-                                    <Button variant="ghost" size="sm" className="w-full justify-start h-8 px-2 font-normal text-purple-600 bg-purple-50">
+                                    <Button variant="ghost" size="sm" className="w-full justify-start h-8 px-2 font-normal text-primary bg-primary/10">
                                         <div className="w-full flex items-center gap-2">
-                                            <span className="h-2 w-2 rounded-full bg-purple-600"></span>
+                                            <span className="h-2 w-2 rounded-full bg-primary"></span>
                                             Price
                                         </div>
                                     </Button>
@@ -296,7 +296,7 @@ export default function ItemsPage() {
                                             </div>
                                         </div>
                                     </div>
-                                    <Button className="w-full h-8 bg-indigo-600 hover:bg-indigo-700 text-white">Apply Filter</Button>
+                                    <Button className="w-full h-8 bg-primary hover:bg-primary/90 text-primary-foreground">Apply Filter</Button>
                                 </div>
                             </div>
                         )}
@@ -305,7 +305,7 @@ export default function ItemsPage() {
                     <Link href="/items/new">
                         <Button
                             size="sm"
-                            className="h-8 text-white hover:opacity-90 transition-opacity shadow-sm bg-[lab(44.0605%_29.0279_-86.0352)] dark:bg-indigo-600"
+                            className="h-8 text-primary-foreground hover:opacity-90 transition-opacity shadow-sm bg-primary"
                         >
                             <Plus className="mr-2 h-4 w-4" />
                             New Item
