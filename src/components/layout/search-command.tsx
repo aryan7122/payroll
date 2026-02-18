@@ -2,13 +2,9 @@
 
 import * as React from "react"
 import {
-    Calculator,
-    Calendar,
     CreditCard,
     Settings,
-    Smile,
     User,
-    Search,
     LayoutDashboard,
     Users,
     FileText,
@@ -16,7 +12,6 @@ import {
     FileBadge,
     IndianRupee,
     BookOpen,
-    Bell
 } from "lucide-react"
 
 import {
@@ -27,7 +22,6 @@ import {
     CommandItem,
     CommandList,
     CommandSeparator,
-    CommandShortcut,
 } from "@/components/ui/command"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"

@@ -12,17 +12,33 @@ import {
     Check,
     Palette,
     Type,
-    Sparkles
+    Sparkles,
+    Languages
 } from "lucide-react"
+import { changeLanguage } from "@/components/theme/google-translator"
 
 export default function AppearancePage() {
     const { theme, setTheme } = useTheme()
     const { brandColor, setBrandColor, fontFamily, setFontFamily } = useDesign()
     const [mounted, setMounted] = React.useState(false)
+    const [currentLang, setCurrentLang] = React.useState("en")
 
     // Wait until mounted on client to prevent hydration mismatch
     React.useEffect(() => {
         setMounted(true)
+        // Parse Google Translate cookie to get current language
+        // Cookie format is typically '/auto/en' or '/en/hi'
+        import("cookies-next").then(({ getCookie }) => {
+            const cookie = getCookie("googtrans")
+            if (cookie && typeof cookie === "string") {
+                const parts = cookie.split("/")
+                // effectively gets the last part which is the language code
+                const langCode = parts[parts.length - 1]
+                if (langCode) {
+                    setCurrentLang(langCode)
+                }
+            }
+        })
     }, [])
 
     if (!mounted) return null
@@ -144,6 +160,51 @@ export default function AppearancePage() {
                             {fontFamily === font.name && (
                                 <div className="bg-primary rounded-full p-1">
                                     <Check className="size-3 text-primary-foreground" />
+                                </div>
+                            )}
+                        </button>
+                    ))}
+                </div>
+            </section>
+
+            {/* Language Selection */}
+            <section className="space-y-4">
+                <div className="flex items-center gap-2 text-foreground">
+                    <Languages className="size-5 text-primary" />
+                    <h2 className="text-xl font-bold tracking-tight">Language</h2>
+                </div>
+                <p className="text-muted-foreground text-sm">Select your preferred language.</p>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-4 notranslate">
+                    {[
+                        { code: "en", name: "English", native: "English" },
+                        { code: "hi", name: "Hindi", native: "हिन्दी" },
+                        { code: "fr", name: "French", native: "Français" },
+                        { code: "es", name: "Spanish", native: "Español" },
+                        { code: "de", name: "German", native: "Deutsch" },
+                        { code: "ja", name: "Japanese", native: "日本語" },
+                        { code: "zh-CN", name: "Chinese", native: "中文" },
+                        { code: "ar", name: "Arabic", native: "العربية" },
+                    ].map((lang) => (
+                        <button
+                            key={lang.code}
+                            onClick={() => changeLanguage(lang.code)}
+                            className={cn(
+                                "flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all duration-300 group glass-adaptive relative",
+                                currentLang === lang.code
+                                    ? "bg-accent/40 border-primary/50"
+                                    : "border-border/50 hover:border-primary/20 hover:bg-accent/40"
+                            )}
+                        >
+                            <span className={cn(
+                                "text-sm font-bold tracking-tight",
+                                currentLang === lang.code ? "text-foreground" : "text-muted-foreground"
+                            )}>{lang.native}</span>
+                            <span className="text-xs text-muted-foreground mt-1">{lang.name}</span>
+
+                            {currentLang === lang.code && (
+                                <div className="absolute top-2 right-2">
+                                    <Check className="size-3 text-primary" />
                                 </div>
                             )}
                         </button>

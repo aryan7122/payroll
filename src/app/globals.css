@@ -184,3 +184,51 @@
     }
   }
 }
+
+
+/* Hide Google Translate Toolbar */
+/* Hide Google Translate Toolbar */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+iframe.goog-te-banner-frame {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+}
+
+body {
+  top: 0px !important;
+  position: static !important;
+}
+
+/* Hide the default Google Translate widget verify */
+.goog-te-gadget {
+  display: none !important;
+  height: 0 !important;
+  overflow: hidden;
+}
+
+.goog-te-gadget-simple {
+  display: none !important;
+}
+
+/* Hide tooltip on hover */
+.goog-text-highlight {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Hide the "Original text" popup */
+#goog-gt-tt {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Prevent padding/margin shifts */
+html,
+body {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}

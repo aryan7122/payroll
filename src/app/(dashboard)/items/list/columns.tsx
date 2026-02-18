@@ -5,22 +5,7 @@ import { ArrowUpDown, MoreHorizontal, Calendar, Tag, Box, Layers, Percent, Dolla
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Badge } from "@/components/ui/badge"
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Item = {
-    id: string
-    name: string
-    category: string
-    subCategory: string
-    sku: string
-    type: "Product" | "Service" | "Packaging" | "Raw Material"
-    stockQty: number
-    taxRate?: number
-    price: number
-}
-
-// ... (imports remain the same)
+import { Item } from "@/hooks/use-items"
 
 export const columns: ColumnDef<Item>[] = [
     {
@@ -65,7 +50,8 @@ export const columns: ColumnDef<Item>[] = [
         cell: ({ row }) => <div className="font-medium text-sm text-primary hover:underline cursor-pointer decoration-primary/50 underline-offset-4">{row.getValue("name")}</div>,
     },
     {
-        accessorKey: "category", // Virtual accessor for combined display
+        id: "category",
+        accessorFn: (row) => `${row.category?.name || ''} ${row.sub_category?.name || ''}`,
         header: () => (
             <div className="flex items-center text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                 <Layers className="mr-2 h-4 w-4" />
@@ -73,9 +59,11 @@ export const columns: ColumnDef<Item>[] = [
             </div>
         ),
         cell: ({ row }) => {
+            const category = row.original.category?.name || "-"
+            const subCategory = row.original.sub_category?.name || "-"
             return (
                 <div className="flex flex-col">
-                    <span className="text-sm text-foreground">{row.original.category} <span className="text-muted-foreground mx-1">/</span> {row.original.subCategory}</span>
+                    <span className="text-sm text-foreground">{category} <span className="text-muted-foreground mx-1">/</span> {subCategory}</span>
                 </div>
             )
         }
@@ -98,6 +86,7 @@ export const columns: ColumnDef<Item>[] = [
                 TYPE
             </div>
         ),
+
         cell: ({ row }) => {
             const type = row.getValue("type") as string
             let variant: "default" | "secondary" | "outline" | "destructive" = "outline"
@@ -112,12 +101,12 @@ export const columns: ColumnDef<Item>[] = [
             } else if (type === "Raw Material") {
                 className = "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-50 dark:bg-emerald-900/30 dark:text-emerald-300 dark:border-emerald-800"
             }
-
             return <Badge variant="outline" className={className}>{type}</Badge>
         }
     },
+
     {
-        accessorKey: "stockQty",
+        accessorKey: "stock",
         header: () => (
             <div className="flex items-center justify-end text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                 <Box className="mr-2 h-4 w-4" />
@@ -125,12 +114,13 @@ export const columns: ColumnDef<Item>[] = [
             </div>
         ),
         cell: ({ row }) => {
-            const qty = parseFloat(row.getValue("stockQty"))
+            const val = row.getValue("stock")
+            const qty = typeof val === 'string' ? parseFloat(val) : (typeof val === 'number' ? val : 0)
             return <div className="text-right font-medium text-sm text-foreground">{qty.toFixed(2)}</div>
         }
     },
     {
-        accessorKey: "taxRate",
+        accessorKey: "tax_rate",
         header: () => (
             <div className="flex items-center justify-end text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                 <Percent className="mr-2 h-4 w-4" />
@@ -138,7 +128,7 @@ export const columns: ColumnDef<Item>[] = [
             </div>
         ),
         cell: ({ row }) => {
-            const rate = row.getValue("taxRate")
+            const rate = row.getValue("tax_rate") as number | null | undefined
             if (rate === undefined || rate === null) return <div className="text-right">-</div>
             return <div className="text-right text-sm text-foreground">{rate} %</div>
         }
@@ -152,7 +142,8 @@ export const columns: ColumnDef<Item>[] = [
             </div>
         ),
         cell: ({ row }) => {
-            const amount = parseFloat(row.getValue("price"))
+            const val = row.getValue("price")
+            const amount = typeof val === 'string' ? parseFloat(val) : (typeof val === 'number' ? val : 0)
             const formatted = new Intl.NumberFormat("en-IN", {
                 style: "decimal",
                 minimumFractionDigits: 0,

@@ -3,6 +3,8 @@ import { Geist, Geist_Mono, Inter, Roboto, Outfit, Montserrat, Poppins } from "n
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { DesignProvider } from "@/components/theme/design-provider";
+import { GoogleTranslator } from "@/components/theme/google-translator";
+import { QueryProvider } from "@/providers/query-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -58,15 +60,20 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${roboto.variable} ${outfit.variable} ${montserrat.variable} ${poppins.variable} antialiased`}
         style={{ fontFamily: 'var(--font-primary)' } as any}
       >
+
+
+        <GoogleTranslator />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <DesignProvider>
-            {children}
-          </DesignProvider>
+          <QueryProvider>
+            <DesignProvider>
+              {children}
+            </DesignProvider>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>
