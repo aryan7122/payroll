@@ -1,6 +1,7 @@
 "use client"
 
-import { columns, Item } from "./columns" // Import columns and type
+// import { columns, Item } from "./list/columns" // Import columns and type
+import { columns, Item } from "./columns"
 import { DataTable } from "@/components/ui/data-table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -301,8 +302,12 @@ export default function ItemsPage() {
                         )}
                     </div>
 
-                    <Link href="/items/create">
-                        <Button size="sm" className="h-8 bg-green-500 hover:bg-green-600 text-white">
+                    <Link href="/items/new">
+                        <Button
+                            size="sm"
+                            className="h-8 text-white hover:opacity-90 transition-opacity shadow-sm"
+                            style={{ backgroundColor: "lab(44.0605% 29.0279 -86.0352)" }}
+                        >
                             <Plus className="mr-2 h-4 w-4" />
                             New Item
                         </Button>

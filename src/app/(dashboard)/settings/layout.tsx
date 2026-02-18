@@ -18,7 +18,7 @@ const settingsNavItems = [
     { title: "Statutory (PF/ESI)", href: "/settings/statutory", icon: ShieldAlert },
     { title: "Taxes & Deductions", href: "/settings/taxes", icon: FileText },
     { title: "Leave Policies", href: "/settings/leaves", icon: CalendarClock },
-    { title: "Shift Schedule", href: "/settings/shifts", icon: Settings },
+    { title: "Appearance", href: "/settings/appearance", icon: Settings },
 ]
 
 export default function SettingsLayout({
