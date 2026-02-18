@@ -46,6 +46,8 @@ export function DesignProvider({ children }: { children: React.ReactNode }) {
         }
         if (font) {
             root.style.setProperty("--font-primary", font)
+            // Also set on body as secondary target
+            document.body.style.setProperty("--font-primary", font)
         }
     }
 

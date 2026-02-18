@@ -18,7 +18,6 @@
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
   --color-brand: var(--brand-primary);
-  --font-primary: var(--font-primary);
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
@@ -126,7 +125,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-primary);
+    font-family: var(--font-primary), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
     @layer utilities {
       .glass-adaptive {
