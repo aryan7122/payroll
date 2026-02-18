@@ -242,14 +242,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                                     "relative transition-all duration-200 rounded-md h-11 px-4 overflow-hidden cursor-pointer selection-none group/btn hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                                                     (isActive || openGroup === item.title)
                                                         ? "bg-sidebar-accent text-sidebar-accent-foreground font-semibold shadow-sm"
-                                                        : "text-sidebar-foreground/70"
+                                                        : "text-sidebar-foreground/85"
                                                 )}
                                             >
                                                 {/* Active Indicator Bar - Sharp & Minimal */}
                                                 {isActive && (
                                                     <motion.div
                                                         layoutId="active-pill"
-                                                        className="absolute left-0 w-1 h-5 bg-primary rounded-r-full"
+                                                        className="absolute left-0 w-[4px] h-7 bg-primary rounded-r-full shadow-[0_0_10px_var(--sidebar-ring)]"
                                                         transition={{ type: "spring", stiffness: 400, damping: 40 }}
                                                     />
                                                 )}
@@ -300,27 +300,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                                                     return (
                                                                         <SidebarMenuSubItem key={subItem.title} className="relative">
                                                                             {/* Vertical Line Segment - Precise SPLIT for Indigo Termination */}
-                                                                            <div className="absolute -left-1 w-px top-0 h-full">
+                                                                            <div className="absolute -left-1 w-[1.5px] top-0 h-full">
                                                                                 {/* TOP HALF: Indigo if this or any below is active */}
                                                                                 <div className={cn(
                                                                                     "absolute top-0 left-0 w-full h-1/2 transition-colors duration-300",
-                                                                                    isPathActive ? "bg-primary/60 shadow-[0_0_8px_var(--sidebar-ring)]" : "bg-sidebar-border/30"
+                                                                                    isPathActive ? "bg-primary shadow-[0_0_8px_var(--sidebar-ring)]" : "bg-sidebar-border/40"
                                                                                 )} />
                                                                                 {/* BOTTOM HALF: Indigo ONLY if someone BELOW is active */}
                                                                                 {!isLast && (
                                                                                     <div className={cn(
                                                                                         "absolute top-1/2 left-0 w-full h-1/2 transition-colors duration-300",
                                                                                         item.items?.slice(index + 1).some(si => pathname === si.url)
-                                                                                            ? "bg-primary/60 shadow-[0_0_8px_var(--sidebar-ring)]"
-                                                                                            : "bg-sidebar-border/30"
+                                                                                            ? "bg-primary shadow-[0_0_8px_var(--sidebar-ring)]"
+                                                                                            : "bg-sidebar-border/40"
                                                                                     )} />
                                                                                 )}
                                                                             </div>
 
                                                                             {/* Tree Line Tick - Highlight only if sub-item is active */}
                                                                             <div className={cn(
-                                                                                "absolute -left-1 top-1/2 -translate-y-1/2 w-4 h-px transition-colors duration-300",
-                                                                                isSubActive ? "bg-primary/80 shadow-[0_0_8px_var(--sidebar-ring)]" : "bg-sidebar-border/30"
+                                                                                "absolute -left-1 top-1/2 -translate-y-1/2 w-4 h-[1.5px] transition-colors duration-300",
+                                                                                isSubActive ? "bg-primary shadow-[0_0_8px_var(--sidebar-ring)]" : "bg-sidebar-border/40"
                                                                             )} />
 
                                                                             <SidebarMenuSubButton asChild className={cn(
@@ -415,27 +415,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                                                     return (
                                                                         <SidebarMenuSubItem key={subItem.title} className="relative">
                                                                             {/* Vertical Line Segment - Precise SPLIT for Indigo Termination */}
-                                                                            <div className="absolute -left-1 w-px top-0 h-full">
+                                                                            <div className="absolute -left-1 w-[1.5px] top-0 h-full">
                                                                                 {/* TOP HALF: Indigo if this or any below is active */}
                                                                                 <div className={cn(
                                                                                     "absolute top-0 left-0 w-full h-1/2 transition-colors duration-300",
-                                                                                    isPathActive ? "bg-primary/60 shadow-[0_0_8px_var(--sidebar-ring)]" : "bg-sidebar-border/30"
+                                                                                    isPathActive ? "bg-primary shadow-[0_0_8px_var(--sidebar-ring)]" : "bg-sidebar-border/40"
                                                                                 )} />
                                                                                 {/* BOTTOM HALF: Indigo ONLY if someone BELOW is active */}
                                                                                 {!isLast && (
                                                                                     <div className={cn(
                                                                                         "absolute top-1/2 left-0 w-full h-1/2 transition-colors duration-300",
                                                                                         item.items?.slice(index + 1).some(si => pathname === si.url)
-                                                                                            ? "bg-primary/60 shadow-[0_0_8px_var(--sidebar-ring)]"
-                                                                                            : "bg-sidebar-border/30"
+                                                                                            ? "bg-primary shadow-[0_0_8px_var(--sidebar-ring)]"
+                                                                                            : "bg-sidebar-border/40"
                                                                                     )} />
                                                                                 )}
                                                                             </div>
 
                                                                             {/* Tree Line Tick - Highlight only if sub-item is active */}
                                                                             <div className={cn(
-                                                                                "absolute -left-1 top-1/2 -translate-y-1/2 w-4 h-px transition-colors duration-300",
-                                                                                isSubActive ? "bg-primary/80 shadow-[0_0_8px_var(--sidebar-ring)]" : "bg-sidebar-border/30"
+                                                                                "absolute -left-1 top-1/2 -translate-y-1/2 w-4 h-[1.5px] transition-colors duration-300",
+                                                                                isSubActive ? "bg-primary shadow-[0_0_8px_var(--sidebar-ring)]" : "bg-sidebar-border/40"
                                                                             )} />
 
                                                                             <SidebarMenuSubButton asChild className={cn(

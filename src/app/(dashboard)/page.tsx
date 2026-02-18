@@ -52,7 +52,7 @@ const stats = [
 
 export default function Page() {
     return (
-        <ScrollArea className="h-full bg-[#09090b]">
+        <ScrollArea className="h-full bg-background">
             <div className="flex flex-1 flex-col gap-8 p-8 max-w-7xl mx-auto">
                 {/* Header Section */}
                 <motion.div
@@ -60,7 +60,7 @@ export default function Page() {
                     animate={{ opacity: 1, y: 0 }}
                     className="flex flex-col gap-1"
                 >
-                    <h1 className="text-3xl font-bold tracking-tight text-white">Dashboard Overview</h1>
+                    <h1 className="text-3xl font-bold tracking-tight text-foreground">Dashboard Overview</h1>
                     <p className="text-muted-foreground font-medium">Welcome back, here's what's happening with your accounts today.</p>
                 </motion.div>
 
@@ -72,20 +72,20 @@ export default function Page() {
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: i * 0.1 }}
-                            className="glass-dark rounded-3xl p-6 flex flex-col justify-between hover:border-white/20 transition-all cursor-default group"
+                            className="glass-adaptive rounded-3xl p-6 flex flex-col justify-between hover:border-primary/20 transition-all cursor-default group"
                         >
                             <div className="flex items-center justify-between">
                                 <div className={cn("p-3 rounded-2xl", stat.bg)}>
                                     <stat.icon className={cn("size-5", stat.color)} />
                                 </div>
-                                <div className="p-1 rounded-full bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <ArrowUpRight className="size-4 text-white" />
+                                <div className="p-1 rounded-full bg-accent opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <ArrowUpRight className="size-4 text-foreground" />
                                 </div>
                             </div>
                             <div className="mt-6">
                                 <p className="text-sm font-medium text-muted-foreground">{stat.title}</p>
                                 <div className="flex items-baseline gap-2 mt-1">
-                                    <h3 className="text-2xl font-bold text-white">{stat.value}</h3>
+                                    <h3 className="text-2xl font-bold text-foreground">{stat.value}</h3>
                                     <span className={cn("text-xs font-bold", stat.change.startsWith("+") ? "text-emerald-500" : "text-orange-500")}>
                                         {stat.change}
                                     </span>
@@ -99,11 +99,11 @@ export default function Page() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4 }}
-                        className="lg:col-span-3 glass-dark rounded-3xl p-8 min-h-[400px] relative overflow-hidden group"
+                        className="lg:col-span-3 glass-adaptive rounded-3xl p-8 min-h-[400px] relative overflow-hidden group"
                     >
                         <div className="flex items-center justify-between mb-8">
                             <div>
-                                <h3 className="text-xl font-bold text-white">Revenue Growth</h3>
+                                <h3 className="text-xl font-bold text-foreground">Revenue Growth</h3>
                                 <p className="text-sm text-muted-foreground">Monthly performance analysis</p>
                             </div>
                             <div className="flex items-center gap-2">
@@ -124,7 +124,7 @@ export default function Page() {
                                     transition={{ delay: 0.5 + (i * 0.05), duration: 1 }}
                                     className="flex-1 bg-primary/20 hover:bg-primary/40 rounded-t-lg transition-colors relative group/bar"
                                 >
-                                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/bar:opacity-100 bg-white text-black text-[10px] font-bold px-1.5 py-0.5 rounded transition-opacity">
+                                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover/bar:opacity-100 bg-popover text-popover-foreground text-[10px] font-bold px-1.5 py-0.5 rounded transition-opacity shadow-lg border">
                                         ₹{h}k
                                     </div>
                                 </motion.div>
@@ -136,10 +136,10 @@ export default function Page() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.5 }}
-                        className="lg:col-span-1 glass-dark rounded-3xl p-8 flex flex-col justify-between"
+                        className="lg:col-span-1 glass-adaptive rounded-3xl p-8 flex flex-col justify-between"
                     >
                         <div>
-                            <h3 className="text-xl font-bold text-white">Recent Activities</h3>
+                            <h3 className="text-xl font-bold text-foreground">Recent Activities</h3>
                             <p className="text-sm text-muted-foreground mt-1">Updates from your team</p>
                         </div>
 
@@ -154,7 +154,7 @@ export default function Page() {
                                         {activity.user}
                                     </div>
                                     <div className="grid gap-0.5">
-                                        <p className="text-xs font-semibold text-white">{activity.task}</p>
+                                        <p className="text-xs font-semibold text-foreground">{activity.task}</p>
                                         <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
                                             <activity.icon className="size-3" />
                                             {activity.time}
@@ -164,7 +164,7 @@ export default function Page() {
                             ))}
                         </div>
 
-                        <button className="w-full mt-8 py-3 rounded-2xl bg-white text-black font-bold text-sm hover:opacity-90 transition-opacity">
+                        <button className="w-full mt-8 py-3 rounded-2xl bg-primary text-primary-foreground font-bold text-sm hover:opacity-90 transition-opacity shadow-lg shadow-primary/20">
                             View All Logs
                         </button>
                     </motion.div>
