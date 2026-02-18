@@ -12,6 +12,7 @@ import {
     Bell
 } from "lucide-react"
 import { useTheme } from "next-themes"
+import Link from "next/link"
 
 import {
     Avatar,
@@ -41,12 +42,12 @@ export function UserNav() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-11 w-11 rounded-full ring-2 ring-indigo-500/20 shadow-lg shadow-indigo-500/10 hover:ring-indigo-500/40 transition-all p-0 cursor-pointer">
-                    <Avatar className="h-11 w-11 border-2 border-zinc-950">
+                <Button variant="ghost" className="relative h-11 w-11 rounded-full ring-2 ring-primary/20 shadow-lg shadow-primary/10 hover:ring-primary/40 transition-all p-0 cursor-pointer">
+                    <Avatar className="h-11 w-11 border-2 border-background">
                         <AvatarImage src="/avatars/cs-logo.png" alt="Codesquarry" />
-                        <AvatarFallback className="bg-indigo-600/10 text-indigo-400 font-bold text-sm">CQ</AvatarFallback>
+                        <AvatarFallback className="bg-primary/10 text-primary font-bold text-sm">CQ</AvatarFallback>
                     </Avatar>
-                    <div className="absolute bottom-0 right-0 size-3 rounded-full bg-emerald-500 border-2 border-zinc-950 shadow-[0_0_8px_rgba(16,185,129,0.4)]" />
+                    <div className="absolute bottom-0 right-0 size-3 rounded-full bg-emerald-500 border-2 border-background shadow-[0_0_8px_rgba(16,185,129,0.4)]" />
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-64 mt-2 bg-popover/80 backdrop-blur-xl border-border p-2 shadow-2xl" align="end" forceMount>
@@ -64,15 +65,19 @@ export function UserNav() {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-border/50" />
                 <DropdownMenuGroup className="p-1">
-                    <DropdownMenuItem className="focus:bg-primary/10 focus:text-primary cursor-pointer rounded-md h-9 px-2 gap-3 transition-colors duration-200">
-                        <Settings className="size-4 opacity-70" />
-                        <span className="text-[13px] font-medium">Settings</span>
-                        <DropdownMenuShortcut className="text-[10px] opacity-50 font-mono">⌘S</DropdownMenuShortcut>
+                    <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary cursor-pointer rounded-md h-9 px-2 gap-3 transition-colors duration-200">
+                        <Link href="/settings/company" className="flex items-center w-full gap-3">
+                            <Settings className="size-4 opacity-70" />
+                            <span className="text-[13px] font-medium">Settings</span>
+                            <DropdownMenuShortcut className="ml-auto text-[10px] opacity-50 font-mono">⌘S</DropdownMenuShortcut>
+                        </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="focus:bg-primary/10 focus:text-primary cursor-pointer rounded-md h-9 px-2 gap-3 transition-colors duration-200">
-                        <BookOpen className="size-4 opacity-70" />
-                        <span className="text-[13px] font-medium">Documentation</span>
-                        <DropdownMenuShortcut className="text-[10px] opacity-50 font-mono">⌘D</DropdownMenuShortcut>
+                    <DropdownMenuItem asChild className="focus:bg-primary/10 focus:text-primary cursor-pointer rounded-md h-9 px-2 gap-3 transition-colors duration-200">
+                        <Link href="/docs" className="flex items-center w-full gap-3">
+                            <BookOpen className="size-4 opacity-70" />
+                            <span className="text-[13px] font-medium">Documentation</span>
+                            <DropdownMenuShortcut className="ml-auto text-[10px] opacity-50 font-mono">⌘D</DropdownMenuShortcut>
+                        </Link>
                     </DropdownMenuItem>
 
                     <DropdownMenuSub>
@@ -90,27 +95,27 @@ export function UserNav() {
                                         <Sun className="mr-2 h-3.5 w-3.5" />
                                         <span className="text-[12px]">Light</span>
                                     </div>
-                                    {theme === "light" && <Check className="h-3.5 w-3.5 text-indigo-400" />}
+                                    {theme === "light" && <Check className="h-3.5 w-3.5 text-primary" />}
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
                                     onClick={() => setTheme("dark")}
-                                    className="focus:bg-white/10 focus:text-white cursor-pointer rounded-md h-8 px-2 flex items-center justify-between"
+                                    className="focus:bg-primary/10 focus:text-primary cursor-pointer rounded-md h-8 px-2 flex items-center justify-between"
                                 >
                                     <div className="flex items-center">
                                         <Moon className="mr-2 h-3.5 w-3.5" />
                                         <span className="text-[12px]">Dark</span>
                                     </div>
-                                    {theme === "dark" && <Check className="h-3.5 w-3.5 text-indigo-400" />}
+                                    {theme === "dark" && <Check className="h-3.5 w-3.5 text-primary" />}
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
                                     onClick={() => setTheme("system")}
-                                    className="focus:bg-white/10 focus:text-white cursor-pointer rounded-md h-8 px-2 flex items-center justify-between"
+                                    className="focus:bg-primary/10 focus:text-primary cursor-pointer rounded-md h-8 px-2 flex items-center justify-between"
                                 >
                                     <div className="flex items-center">
                                         <Monitor className="mr-2 h-3.5 w-3.5" />
                                         <span className="text-[12px]">System</span>
                                     </div>
-                                    {theme === "system" && <Check className="h-3.5 w-3.5 text-indigo-400" />}
+                                    {theme === "system" && <Check className="h-3.5 w-3.5 text-primary" />}
                                 </DropdownMenuItem>
                             </DropdownMenuSubContent>
                         </DropdownMenuPortal>

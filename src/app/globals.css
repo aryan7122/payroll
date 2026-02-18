@@ -129,8 +129,8 @@
 }
 
 @layer utilities {
-  .glass {
-    @apply backdrop-blur-md bg-white/40 border border-white/20 shadow-lg;
+  .glass-adaptive {
+    @apply backdrop-blur-md bg-card/40 border border-border/50 shadow-xl dark:bg-black/40 dark:border-white/10;
   }
 
   .glass-dark {
@@ -138,7 +138,7 @@
   }
 
   .glass-card {
-    @apply backdrop-blur-lg bg-zinc-900/40 border border-white/5 shadow-2xl;
+    @apply backdrop-blur-lg bg-card/60 border border-border/50 shadow-2xl dark:bg-zinc-900/40 dark:border-white/5;
   }
 
   /* Custom Scrollbar for OS Feel */
